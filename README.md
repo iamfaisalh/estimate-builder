@@ -128,7 +128,7 @@ Tests can be found in the `__tests__` directory
   - `GET /api/estimates/:id` - Fetch one estimate by ID
     - Test 2 : should handle invalid estimate IDs
     - Test 3 : should handle estimates that do not exist
-  - `POST /api/estimates`
+  - `POST /api/estimates` - Create an estimate
     - Test 4 : should handle a missing property in the request body
     - Test 5 : should handle an estimate with no items
     - Test 6 : should handle an invalid estimate item
