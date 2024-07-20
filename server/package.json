@@ -9,7 +9,7 @@
     "lint": "eslint . --ext .ts",
     "prod": "npm run build && node dist/server.js",
     "start": "node dist/server.js",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "keywords": [],
   "author": "",

@@ -80,6 +80,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 - Follow instructions to install and run MongoDB Community Edition - https://www.mongodb.com/docs/manual/administration/install-community/
 - Follow instructions to install Node.js (v18+) - https://nodejs.org/en/download/
+- Follow instructions to install git - https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 - Install an integrated development environment (IDE) such as Visual Studio Code (VS Code)
   - Follow instructions to install VS Code - https://code.visualstudio.com/download
 - OPTIONAL : Follow instructions to install Studio 3T - https://studio3t.com/download/
@@ -100,6 +101,7 @@ Change directory (`cd`) into the repository or open up the repository in VS Code
 - `cd` into the server directory
 - Create a file called `.env` then copy and paste the code below. Replace <YOUR_CONNECTION_STRING> with your MongoDB connection string
   - Connection string example `mongodb://localhost:27017/mydb`
+  - Note : Make sure MongoDB is already running in the background. Using the connection string `mongodb://localhost:27017/mydb` will automatically create a database called "mydb" (if it does not exist) when you run the server
 
 ```
 ALLOWED_ORIGINS="http://localhost:3000"
