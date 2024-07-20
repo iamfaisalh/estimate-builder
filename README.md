@@ -148,3 +148,35 @@ REACT_APP_SERVER_URL="http://localhost:9000/api"
 - Install the node_modules with the following command : `npm install`
 - Start the app in development mode on port 3000 : `npm start`
 - Open http://localhost:3000 to view it in your browser
+
+#### Demo screens
+
+##### Home Page (empty estimates list state)
+
+<img height="500" alt="Home Page (empty estimates list state)" src="https://github.com/user-attachments/assets/3ac2d81e-924c-476d-9063-517911e1cb13">
+
+##### Home Page (populated estimates list state)
+
+<img height="500" alt="Home Page (populated estimates list state)" src="https://github.com/user-attachments/assets/8ff77c32-2de3-40cd-b228-e239cbd7ee6b">
+
+##### Estimate Builder Page
+
+<img height="500" alt="Estimate Builder Page 1/2" src="https://github.com/user-attachments/assets/7320a559-620b-41b1-abce-974b3fdf800d">
+<img height="500" alt="Estimate Builder Page 2/2" src="https://github.com/user-attachments/assets/b8ff6d24-fbd8-41f7-90c0-bc702b96c46e">
+
+##### Estimate View
+
+<img height="500" alt="Estimate View" src="https://github.com/user-attachments/assets/49629b8b-0e0f-45c0-b306-c5aeba1d2674">
+
+## Things to note about the project scope and potential future improvements
+
+This project is very simple and it was only completed for the required specifications. It can be improved by diving deeper into the problem and growing it into a larger platform. For example :
+
+- Adding a user data model (maybe for contractors and customers) and linking it to estimate objects
+- User authentication, signup, login, etc.
+- Integrating with Stripe to handle and manage payments using the generated estimate built on this app
+- Customer portal
+- Complex estimate calculations, options, and configurations
+- More strict validation for estimates
+- Improved user interface, such as a stylish navbar with a search input feature
+- And much more...
