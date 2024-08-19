@@ -11,8 +11,10 @@ const rate_schema = new Schema<Rate>({
 });
 
 export interface Item {
+  cost: number;
   margin: number;
   name: string;
+  price: number;
   rate: Rate;
   time: number;
   type: "labor" | "materials" | "equipment";
@@ -20,8 +22,10 @@ export interface Item {
 }
 
 const item_schema = new Schema<Item>({
+  cost: { type: Number, default: 0, required: true },
   margin: { type: Number, default: 0, required: true },
   name: { type: String, trim: true, required: true },
+  price: { type: Number, default: 0, required: true },
   rate: { type: rate_schema, required: true },
   time: { type: Number, default: 0 },
   type: { type: String, enum: ["labor", "materials", "equipment"] },
@@ -56,6 +60,9 @@ export interface EstimateData {
   customer_name: string;
   items: Item[];
   job_number: string;
+  total_cost: number;
+  total_margin: number;
+  total_price: number;
 }
 
 export interface Estimate extends Document {
@@ -64,6 +71,9 @@ export interface Estimate extends Document {
   customer_name: string;
   items: Item[];
   job_number: string;
+  total_cost: number;
+  total_margin: number;
+  total_price: number;
 }
 
 const estimate_schema = new Schema<Estimate>(
@@ -73,6 +83,9 @@ const estimate_schema = new Schema<Estimate>(
     customer_name: { type: String, trim: true, required: true },
     items: [item_schema],
     job_number: { type: String, required: true },
+    total_cost: { type: Number, default: 0, required: true },
+    total_margin: { type: Number, default: 0, required: true },
+    total_price: { type: Number, default: 0, required: true },
   },
   {
     timestamps: true,

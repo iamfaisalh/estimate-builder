@@ -1,4 +1,4 @@
-# Estimates App
+# Estimate Builder
 
 Full stack application for paving contractors to create estimates for their customers
 
@@ -170,7 +170,7 @@ REACT_APP_SERVER_URL="http://localhost:9000/api"
 
 ## Things to note about the project scope and potential future improvements
 
-This project is very simple and it was only completed for the required specifications. It can be improved by diving deeper into the problem and growing it into a larger platform. For example :
+This project is very simple and can be improved by diving deeper into the problem and growing it into a larger platform. For example :
 
 - Adding a user data model (maybe for contractors and customers) and linking it to estimate objects
 - User authentication, signup, login, etc.

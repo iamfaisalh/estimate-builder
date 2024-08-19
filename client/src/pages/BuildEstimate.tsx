@@ -239,8 +239,10 @@ const INIT_ALERT: AlertObject = {
 
 const INIT_ITEM: Item = {
   _id: "",
+  cost: 0,
   margin: "",
   name: "",
+  price: 0,
   rate: {
     price: "",
     unit: "",

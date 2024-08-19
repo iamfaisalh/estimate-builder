@@ -11,32 +11,7 @@ interface ItemRowProps {
   rowSpan: number;
 }
 
-const calculateCost = (
-  units: number,
-  rate: number,
-  time: number,
-  type: "labor" | "materials" | "equipment"
-) => {
-  try {
-    if (type === "materials") return units * rate;
-    return units * time * rate;
-  } catch (error) {
-    return 0;
-  }
-};
-
-const calculatePrice = (cost: number, margin: number) =>
-  cost / (1 - margin / 100.0);
-
 function ItemRow({ index, item, rowSpan }: ItemRowProps) {
-  const cost = calculateCost(
-    item.units || 1,
-    item.rate.price || 0,
-    item.time || 0,
-    item.type
-  );
-  const price = calculatePrice(cost, item.margin || 0);
-
   return (
     <tr>
       {index === 0 && <td rowSpan={rowSpan}>{toTitle(item.type)}</td>}
@@ -61,9 +36,9 @@ function ItemRow({ index, item, rowSpan }: ItemRowProps) {
         {formatMoney(item.rate.price === "" ? 0 : item.rate.price)} /{" "}
         {item.rate.unit}
       </td>
-      <td>{formatMoney(cost)}</td>
+      <td>{formatMoney(item.cost)}</td>
       <td>{item.margin}%</td>
-      <td>{formatMoney(price)}</td>
+      <td>{formatMoney(item.price)}</td>
     </tr>
   );
 }
@@ -76,10 +51,6 @@ function Estimate() {
   const [laborItems, setLaborItems] = useState<Item[]>([]);
   const [materialItems, setMaterialItems] = useState<Item[]>([]);
   const [equipmentItems, setEquipmentItems] = useState<Item[]>([]);
-  const [totalCost, setTotalCost] = useState<number>(0);
-  const [totalMargin, setTotalMargin] = useState<number>(0);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
-
   const [message, setMessage] = useState<string>("Estimate not found");
 
   useEffect(() => {
@@ -90,9 +61,6 @@ function Estimate() {
           setLaborItems(response.data.labor_items || []);
           setMaterialItems(response.data.material_items || []);
           setEquipmentItems(response.data.equipment_items || []);
-          setTotalCost(response.data.total_cost);
-          setTotalMargin(response.data.total_margin);
-          setTotalPrice(response.data.total_price);
         })
         .catch((error) =>
           error?.data?.message ? setMessage(error.data.message) : null
@@ -230,9 +198,9 @@ function Estimate() {
                         <th className="text-end" colSpan={5}>
                           Total
                         </th>
-                        <td>{formatMoney(totalCost)}</td>
-                        <td>{totalMargin}%</td>
-                        <td>{formatMoney(totalPrice)}</td>
+                        <td>{formatMoney(estimate.total_cost)}</td>
+                        <td>{estimate.total_margin}%</td>
+                        <td>{formatMoney(estimate.total_price)}</td>
                       </tr>
                     </tbody>
                   </table>

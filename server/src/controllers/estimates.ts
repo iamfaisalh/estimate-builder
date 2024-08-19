@@ -6,7 +6,12 @@ import EstimateModel, {
   Item,
 } from "../models/Estimate";
 import CustomError from "../util/CustomError";
-import { generateRandomString, toTitle } from "../util/functions";
+import {
+  calculateCost,
+  calculatePrice,
+  generateRandomString,
+  toTitle,
+} from "../util/functions";
 import { isValidObjectId } from "mongoose";
 
 const addressIsValid = (address: Address) => {
@@ -57,6 +62,9 @@ export const create: RequestHandler = async (req, res, next) => {
       items: [],
       job_number:
         generateRandomString(5, true) + "-" + generateRandomString(4, true),
+      total_cost: 0,
+      total_margin: 0,
+      total_price: 0,
     };
 
     if (new_estimate_data.contractor_name.length === 0)
@@ -99,8 +107,10 @@ export const create: RequestHandler = async (req, res, next) => {
         throw new CustomError("Invalid item found.", 400);
 
       const item: Item = {
+        cost: 0,
         margin: items[i].margin || 0,
         name: items[i].name?.trim() || "",
+        price: 0,
         rate: {
           price: items[i].rate.price || 0,
           unit: items[i].rate.unit?.trim() || "",
@@ -156,8 +166,30 @@ export const create: RequestHandler = async (req, res, next) => {
         );
       }
 
+      item.cost = calculateCost(
+        item.units || 1,
+        item.rate.price || 0,
+        item.time || 0,
+        item.type
+      );
+      item.price = calculatePrice(item.cost, item.margin || 0);
+      new_estimate_data.total_cost += item.cost;
+      new_estimate_data.total_price += item.cost / (1 - item.margin / 100.0);
       new_estimate_data.items.push(item);
     }
+
+    new_estimate_data.total_cost = parseFloat(
+      new_estimate_data.total_cost.toFixed(2)
+    );
+    new_estimate_data.total_price = parseFloat(
+      new_estimate_data.total_price.toFixed(2)
+    );
+    new_estimate_data.total_margin = parseFloat(
+      (
+        (100 * (new_estimate_data.total_price - new_estimate_data.total_cost)) /
+        new_estimate_data.total_price
+      ).toFixed(2)
+    );
 
     const estimate: Estimate = new EstimateModel(new_estimate_data);
     await estimate.save();
@@ -191,37 +223,21 @@ export const fetchOne: RequestHandler = async (req, res, next) => {
     const labor_items: Item[] = [];
     const material_items: Item[] = [];
     const equipment_items: Item[] = [];
-    let i,
-      total_cost = 0,
-      total_margin = 0,
-      total_price = 0;
+
+    let i;
 
     for (i = 0; i < estimate.items.length; i++) {
       const item = estimate.items[i];
       if (item.type === "labor") labor_items.push(item);
       else if (item.type === "materials") material_items.push(item);
       else equipment_items.push(item);
-      const cost =
-        item.type === "materials"
-          ? item.units * item.rate.price
-          : item.units * item.time * item.rate.price;
-
-      total_cost += cost;
-      total_price += cost / (1 - item.margin / 100.0);
     }
-
-    total_margin = parseFloat(
-      ((100 * (total_price - total_cost)) / total_price).toFixed(2)
-    );
 
     return res.json({
       estimate,
       labor_items,
       material_items,
       equipment_items,
-      total_cost: parseFloat(total_cost.toFixed(2)),
-      total_margin,
-      total_price: parseFloat(total_price.toFixed(2)),
     });
   } catch (error) {
     next(error);

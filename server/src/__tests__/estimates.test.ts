@@ -73,6 +73,7 @@ const generateMockEstimateBody = (override_item_size?: number) => {
     const item_type: "labor" | "materials" | "equipment" =
       ITEM_TYPES[faker.number.int({ min: 0, max: ITEM_TYPES.length - 1 })];
     const new_item: Item = {
+      cost: 0,
       margin: faker.number.int({ min: 0, max: 40 }),
       name: RANDOM_ESTIMATE_ITEMS[item_type][
         faker.number.int({
@@ -80,6 +81,7 @@ const generateMockEstimateBody = (override_item_size?: number) => {
           max: RANDOM_ESTIMATE_ITEMS[item_type].length - 1,
         })
       ],
+      price: 0,
       rate: {
         price: faker.number.int({ min: 0, max: 80 }),
         unit: item_type === "materials" ? "ton" : "hr",

@@ -13,8 +13,10 @@ export interface Rate {
 
 export interface Item {
   _id: string;
+  cost: number;
   margin: number | "";
   name: string;
+  price: number;
   rate: Rate;
   time: number | "";
   type: "labor" | "materials" | "equipment";
@@ -28,4 +30,7 @@ export interface EstimateData {
   customer_name: string;
   items: Item[];
   job_number: string;
+  total_cost: number;
+  total_margin: number;
+  total_price: number;
 }

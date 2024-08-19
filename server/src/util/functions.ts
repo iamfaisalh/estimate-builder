@@ -20,3 +20,20 @@ export const toTitle = (string: string) => {
     })
     .join(" ");
 };
+
+export const calculateCost = (
+  units: number,
+  rate: number,
+  time: number,
+  type: "labor" | "materials" | "equipment"
+) => {
+  try {
+    if (type === "materials") return units * rate;
+    return units * time * rate;
+  } catch (error) {
+    return 0;
+  }
+};
+
+export const calculatePrice = (cost: number, margin: number) =>
+  cost / (1 - margin / 100.0);
