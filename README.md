@@ -90,9 +90,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 #### Open a terminal/command line and clone the repository (via HTTPS, SSH or GitHub CLI) in a directory of your choice
 
-- Using HTTPS `git clone https://github.com/iamfaisalh/onecrew.git`
-- Using SSH `git clone git@github.com:iamfaisalh/onecrew.git`
-- Using GitHub CLI `gh repo clone iamfaisalh/onecrew`
+- Using HTTPS `git clone https://github.com/iamfaisalh/estimate-builder.git`
+- Using SSH `git clone git@github.com:iamfaisalh/estimate-builder.git`
+- Using GitHub CLI `gh repo clone iamfaisalh/estimate-builder`
 
 Change directory (`cd`) into the repository or open up the repository in VS Code and open the integrated terminal
 
